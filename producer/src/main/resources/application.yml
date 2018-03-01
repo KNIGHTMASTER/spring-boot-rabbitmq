@@ -1,0 +1,16 @@
+spring:
+  rabbitmq:
+    host: 127.0.0.1
+    port: 5672
+    username: guest
+    password: guest
+
+
+rabbitmq:
+  exchange: example-exchange
+  queue: example-queue
+  routingkey: example-routingkey
+
+  exfanout: fanout-exchange
+  quefanout: fanout-queue
+  quefanout2 : fanout-queue2
