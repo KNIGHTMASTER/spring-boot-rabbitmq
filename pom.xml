@@ -17,6 +17,7 @@
         <module>producer</module>
         <module>subscriber-one</module>
         <module>subscriber-two</module>
+        <module>shared</module>
     </modules>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

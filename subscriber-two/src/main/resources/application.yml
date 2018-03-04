@@ -5,10 +5,27 @@ spring:
     username: guest
     password: guest
 
-server:
-  port: 8081
 
 rabbitmq:
-  exchange: example-exchange
-  queue: example-queue
-  routingkey: example-routingkey
+  direct:
+    exchange: direct-exchange
+    queue: direct-queue-2
+    route1: direct-route-one
+    route2 : direct-route-two
+  topic:
+    exchange: topic-exchange
+    queue: topic-queue2
+  fanout:
+    exchange: fanout-exchange
+    queue: fanout-queue-subscriber-two
+
+messaging:
+  direct:
+    enabled: false
+  topic:
+    enabled: false
+  fanout:
+    enabled: true
+
+server:
+  port: 8081

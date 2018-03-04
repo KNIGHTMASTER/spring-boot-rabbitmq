@@ -7,10 +7,20 @@ spring:
 
 
 rabbitmq:
-  exchange: example-exchange
-  queue: example-queue
-  routingkey: example-routingkey
+  direct:
+    exchange: direct-exchange
+    queue: direct-queue
+    route1: direct-route-one
+    route2 : direct-route-two
+  topic:
+    exchange: topic-exchange
+  fanout:
+    exchange: fanout-exchange
 
-  exfanout: fanout-exchange
-  quefanout: fanout-queue
-  quefanout2 : fanout-queue2
+messaging:
+  direct:
+    enabled: false
+  topic:
+    enabled: false
+  fanout:
+    enabled: true

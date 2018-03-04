@@ -1,4 +1,4 @@
-package com.zisal.messaging.producer;
+package com.zisal.messaging.shared;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
