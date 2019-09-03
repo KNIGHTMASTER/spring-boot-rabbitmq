@@ -4,18 +4,60 @@ spring:
     port: 5672
     username: guest
     password: guest
+    listener:
+      simple:
+        acknowledge-mode: manual
 
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://${db.host}:${db.port}/${db.name}
+    username: ${db.username}
+    password: ${db.password}
+    hikari:
+      minimumIdle: 1
+      maximumPoolSize: 5
+      idleTimeout: 30000
+      poolName: order-api-conn-pool
+      maxLifetime: 2000000
+      connectionTimeout: 60000
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        jdbc:
+          lob:
+            non_contextual_creation: true
+            naming_strategy: org.hibernate.cfg.EJB3NamingStrategy
+            dialect: org.hibernate.dialect.PostgreSQL9Dialect
+            ddl-auto: validate     # Hibernate ddl auto (create, create-drop, validate, update)
+
+
+#============================================================================
+# DATABASE
+#============================================================================
+db:
+  name : rabbit-manual-ack
+  host : localhost
+  port : 5432
+  username : moka
+  password : pgadmin
+  auto-reconnect : true
+  ssl : false
 
 rabbitmq:
   direct:
     exchange: direct-exchange
     queue: direct-queue
+    queue-reply : direct-queue-reply
     route1: direct-route-one
     route2 : direct-route-two
   topic:
     exchange: topic-exchange
   fanout:
     exchange: fanout-exchange
+    exchange-reply: fanout-exchange-reply
+    queue: fanout-queue
+    queue-reply : fanout-queue-reply
 
 messaging:
   direct:
@@ -24,3 +66,6 @@ messaging:
     enabled: false
   fanout:
     enabled: true
+
+server:
+  port: 8081

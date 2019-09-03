@@ -7,13 +7,17 @@ import com.zisal.messaging.producer.service.ProducerTopicExchangeService;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.Bean;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
 /**
  * Created on Mar 1, 2018
  * @author <a href="mailto:fauzi.knightmaster.achmad@gmail.com">Achmad Fauzi</a>
  */
+@EnableJpaRepositories(basePackages = "com.zisal.messaging.shared")
+@EntityScan("com.zisal.messaging.shared")
 @SpringBootApplication
 @EnableScheduling
 public class ProducerApplication {

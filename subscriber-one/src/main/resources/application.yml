@@ -4,6 +4,9 @@ spring:
     port: 5672
     username: guest
     password: guest
+    listener:
+      simple:
+        acknowledge-mode: manual
 
 
 rabbitmq:
@@ -17,6 +20,7 @@ rabbitmq:
     queue: topic-queue
   fanout:
     exchange: fanout-exchange
+    exchange-reply: fanout-exchange-reply
     queue: fanout-queue-subscriber-one
 
 messaging:
