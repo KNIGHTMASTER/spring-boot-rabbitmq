@@ -1,0 +1,50 @@
+version: '3.8'
+
+services:
+  producer:
+    build:
+      context: producer
+      dockerfile: Dockerfile
+    container_name: producer
+    ports:
+      - 8080:8080
+    networks:
+      - rabbit-network
+    depends_on:
+      - rabbitmq
+  subscriber-one:
+    build:
+      context: subscriber-one
+      dockerfile: Dockerfile
+    container_name: subscriber-one
+    ports:
+      - 8181:8181
+    networks:
+      - rabbit-network
+    depends_on:
+      - producer
+  subscriber-two:
+    build:
+      context: subscriber-two
+      dockerfile: Dockerfile
+    container_name: subscriber-two
+    ports:
+      - 8282:8282
+    networks:
+      - rabbit-network
+    depends_on:
+      - producer
+  rabbitmq:
+    build:
+      context: rabbitmq
+      dockerfile: Dockerfile
+    container_name: rabbitmq
+    volumes:
+      - ./rabbitmq/rabbitmq.conf:/etc/rabbitmq/rabbitmq.conf
+    ports:
+      - 5672:5672
+    networks:
+      - rabbit-network
+networks:
+  rabbit-network:
+    driver: bridge

@@ -1,0 +1,11 @@
+.idea/
+producer/producer.iml
+producer/target/
+spring-boot-rabbitmq.iml
+subscriber-one/subscriber-one.iml
+subscriber-one/target/
+subscriber-two/subscriber-two.iml
+subscriber-two/target/
+target/
+shared/shared.iml
+shared/target/

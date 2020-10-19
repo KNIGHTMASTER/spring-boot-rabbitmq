@@ -1,6 +1,6 @@
 spring:
   rabbitmq:
-    host: 127.0.0.1
+    host: rabbitmq
     port: 5672
     username: guest
     password: guest
@@ -24,3 +24,6 @@ messaging:
     enabled: false
   fanout:
     enabled: true
+
+server:
+  port: 8080
