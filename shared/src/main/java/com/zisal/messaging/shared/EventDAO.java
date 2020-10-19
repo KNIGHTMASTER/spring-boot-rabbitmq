@@ -7,4 +7,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * @since : 2019-09-03
  **/
 public interface EventDAO extends JpaRepository<Event, Long> {
+
+    Event findById(Long p_Id);
 }

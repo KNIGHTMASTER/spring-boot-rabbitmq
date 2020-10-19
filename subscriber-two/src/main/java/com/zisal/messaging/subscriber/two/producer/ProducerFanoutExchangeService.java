@@ -1,4 +1,4 @@
-package com.zisal.messaging.subscriber.one.producer;
+package com.zisal.messaging.subscriber.two.producer;
 
 import com.zisal.messaging.shared.ReplyDTO;
 import org.slf4j.Logger;
@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
  * @author <a href="mailto:fauzi.knightmaster.achmad@gmail.com">Achmad Fauzi</a>
  */
 @Service
-public class ProducerFanoutExchangeService{
+public class ProducerFanoutExchangeService {
 
     @Autowired
     private AmqpTemplate amqpTemplate;

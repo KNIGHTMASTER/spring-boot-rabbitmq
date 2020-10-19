@@ -2,6 +2,8 @@ package com.zisal.messaging.subscriber.one.listener;
 
 import com.rabbitmq.client.Channel;
 import com.zisal.messaging.shared.IReceiver;
+import com.zisal.messaging.shared.PublishDTO;
+import com.zisal.messaging.shared.ReplyDTO;
 import com.zisal.messaging.subscriber.one.producer.ProducerFanoutExchangeService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,14 +35,18 @@ public class FanoutListener implements IReceiver<String> {
     }
 
     @RabbitListener(queues = "${rabbitmq.fanout.queue}")
-    public void receive2(String p_DATA, Channel channel, @Header(AmqpHeaders.DELIVERY_TAG) long tag) {
-        LOGGER.info("Received Fanout Exchange Message : "+p_DATA);
+    public void receive2(PublishDTO p_DATA, Channel channel, @Header(AmqpHeaders.DELIVERY_TAG) long tag) {
+        LOGGER.info("Received Fanout Exchange Message : "+p_DATA.getContent());
         try {
             channel.basicAck(tag, false);
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        producerFanoutExchangeService.sendMessage("REPLY MESSAGE "+p_DATA);
+        ReplyDTO replyDTO = new ReplyDTO();
+        replyDTO.setEventId(p_DATA.getEventId());
+        replyDTO.setReceiverName("sub-one");
+        replyDTO.setStatus(true);
+        producerFanoutExchangeService.sendMessage(replyDTO);
     }
 }

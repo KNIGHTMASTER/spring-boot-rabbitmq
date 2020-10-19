@@ -3,6 +3,7 @@ package com.zisal.messaging.producer.service;
 import com.zisal.messaging.producer.IProducer;
 import com.zisal.messaging.shared.Event;
 import com.zisal.messaging.shared.EventDAO;
+import com.zisal.messaging.shared.PublishDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.amqp.core.AmqpTemplate;
@@ -39,14 +40,17 @@ public class ProducerFanoutExchangeService implements IProducer {
     }
 
     public void sendMessage(String p_Message) {
-        LOGGER.info("Fanout Exchange Send "+p_Message);
-        this.amqpTemplate.convertAndSend(exchangeName,"", p_Message);
-
-
         Event event = new Event();
         event.setContent(p_Message);
         event.setStatus(false);
         eventDAO.save(event);
+
+        PublishDTO publishDTO = new PublishDTO();
+        publishDTO.setContent(p_Message);
+        publishDTO.setEventId(event.getId());
+
+        LOGGER.info("Fanout Exchange Send "+publishDTO);
+        this.amqpTemplate.convertAndSend(exchangeName,"", publishDTO);
     }
 
 }

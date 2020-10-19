@@ -2,10 +2,14 @@ package com.zisal.messaging.subscriber.two.listener;
 
 import com.rabbitmq.client.Channel;
 import com.zisal.messaging.shared.IReceiver;
+import com.zisal.messaging.shared.PublishDTO;
+import com.zisal.messaging.shared.ReplyDTO;
+import com.zisal.messaging.subscriber.two.producer.ProducerFanoutExchangeService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.amqp.support.AmqpHeaders;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.Header;
 
 import java.io.IOException;
@@ -17,6 +21,8 @@ import java.io.IOException;
  */
 public class FanoutListener implements IReceiver<String> {
 
+    @Autowired private ProducerFanoutExchangeService producerFanoutExchangeService;
+
     private static final Logger LOGGER = LoggerFactory.getLogger(FanoutListener.class);
 
     /*@RabbitListener(queues = "${rabbitmq.fanout.queue}")*/
@@ -26,12 +32,19 @@ public class FanoutListener implements IReceiver<String> {
     }
 
     @RabbitListener(queues = "${rabbitmq.fanout.queue}")
-    public void receive2(String p_DATA, Channel channel, @Header(AmqpHeaders.DELIVERY_TAG) long tag) {
-        LOGGER.info("Received Fanout Exchange Message : "+p_DATA);
+    public void receive2(PublishDTO p_DATA, Channel channel, @Header(AmqpHeaders.DELIVERY_TAG) long tag) {
+        LOGGER.info("Received Fanout Exchange Message : "+p_DATA.getContent());
         try {
             channel.basicAck(tag, false);
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        ReplyDTO replyDTO = new ReplyDTO();
+        replyDTO.setEventId(p_DATA.getEventId());
+        replyDTO.setReceiverName("sub-one");
+        replyDTO.setStatus(true);
+
+        producerFanoutExchangeService.sendMessage(replyDTO);
     }
 }

@@ -22,6 +22,7 @@ rabbitmq:
     exchange: fanout-exchange
     exchange-reply: fanout-exchange-reply
     queue: fanout-queue-subscriber-one
+    queue-reply : fanout-queue-reply
 
 messaging:
   direct:

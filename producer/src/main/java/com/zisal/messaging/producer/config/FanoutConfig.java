@@ -22,8 +22,14 @@ public class FanoutConfig {
     @Value("${rabbitmq.fanout.exchange}")
     private String exchangeName;
 
+    @Value("${rabbitmq.fanout.queue}")
+    private String queueName;
+
     @Value("${rabbitmq.fanout.exchange-reply}")
     private String exchangeReplyName;
+
+    @Value("${rabbitmq.fanout.queue-reply}")
+    private String queueReplyName;
 
     @Bean
     public FanoutExchange fanoutExchange() {
@@ -35,16 +41,10 @@ public class FanoutConfig {
         return new FanoutExchange(exchangeReplyName);
     }
 
-    @Value("${rabbitmq.fanout.queue}")
-    private String queueName;
-
     @Bean
     public Queue queueFanout() {
         return new Queue(queueName);
     }
-
-    @Value("${rabbitmq.fanout.queue-reply}")
-    private String queueReplyName;
 
     @Bean
     public Queue queueFanoutReply() {

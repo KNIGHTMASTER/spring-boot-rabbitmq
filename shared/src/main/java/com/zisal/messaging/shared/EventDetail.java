@@ -19,9 +19,17 @@ public class EventDetail implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String content;
+    private String receiverName;
     private Long eventId;
     private Boolean status;
+
+    public String getReceiverName() {
+        return receiverName;
+    }
+
+    public void setReceiverName(String receiverName) {
+        this.receiverName = receiverName;
+    }
 
     public Long getId() {
         return id;
@@ -29,14 +37,6 @@ public class EventDetail implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public String getContent() {
-        return content;
-    }
-
-    public void setContent(String content) {
-        this.content = content;
     }
 
     public Long getEventId() {
